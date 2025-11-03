@@ -1,0 +1,65 @@
+[project]
+name = "semantic-release-test"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.3.0",
+]
+lint = [
+    "mypy>=1.17.1",
+    "ruff>=0.12.10",
+]
+test = [
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.1.0",
+    "pytest-mock>=3.14.1",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+
+[tool.ruff.format]
+# https://docs.astral.sh/ruff/settings/#format
+
+[tool.ruff.lint]
+# ruffのデフォルトは flake8 の subset と pyflakes
+# select = ["E4", "E7", "E9", "F"]
+select = [
+    "E",    # flake8
+    "F",    # pyflakes
+    "B",    # flake8-bugbear        # バグになりそうなコードを警告
+    "A",    # flake8-builtins       # 組み込み関数と同名の変数名を警告
+    "N",    # pepe8-naming          # 変数名の命名規則を警告
+    "C4",   # flake8-comprehensions # リスト内包表記の警告
+    "I",    # isort
+]
+
+# formatterの動作とlinterが競合する場合がある。これを避けるため、ruff公式の推奨設定を踏襲する
+# https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules
+ignore = [
+    "E111",  # indentation is not a multiple of four
+    "E114",  # indentation is not a multiple of four (comment)
+    "E117",  # over-indented
+    "E501",  # line too long
+]
+
+[tool.ruff.lint.per-file-ignores]
+# def test_対象名_コンテキスト_期待する結果()の命名をするため、N802を無視する。
+"tests/**/test_*.py" = ["N802"]
+
+# https://docs.astral.sh/ruff/settings/#lintisort
+[tool.ruff.lint.isort]
+combine-as-imports = true
+
+[tool.mypy]
+python_version = "3.13"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "session"
