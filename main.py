@@ -1,5 +1,5 @@
 def main():
-    print("Hello from semantic-release-test!")
+    print("Hello from semantic-release-test!!")
 
 
 if __name__ == "__main__":
